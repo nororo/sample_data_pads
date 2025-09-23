@@ -40,7 +40,7 @@
 #### ※Google colaboratolyでは、”AI で生成”機能を有効にすると有効にしたGoogleアカウントではノートブックのデータをモデルの学習に追加されてしまうため、秘密情報や個人情報は書かないでください。
   
 ### 2 生成AIの出力コードの理解
-
+#### よく使うデータハンドリング
 #### pandasでdataの内容を調べる
 ```python
 data.head(3) # 先頭3行を表示
@@ -52,16 +52,45 @@ data["column_name"].value_counts() # 頻度（カテゴリ）
 data["column_name"].hist(nbins=100) # 頻度（連続値）
 data["column_name"].isna().sum() # 欠損値の個数
 
-data_f = data.query("column_name == 1") # フィルター
+### フィルター(外れ値以外をみたい、特定の条件のデータだけをみたい)
+data_f = data.query("column_name == 1")
+df.query("column_name in ['categ1', 'categ2', ...]")
+# 変数で絞りたいとき
 val = 1
 data_f = data.query("column_name == @val") 
 
+# カラム名が変わる場合
+colname_variable="column_1"
+df.query("{1} == 'A'".format(colname_variable))
+
+
 ```
 
+#### mergeの確認
+indexの重複関係
 
 
+#### dictを調べる
+```python
+list(sample_dict.keys())
+list(sample_dict.values())
+pd.Series(sample_dict)
+```
+
+#### インスタンス
+```
+# メソッド全部表示
+dir(model)
+# 先頭が"_"以外のメソッド表示
+[name for name in dir(model) if name[0] != "_"]
+# 先頭が"_"以外のメソッドの名前と値
+[item for item in inspect.getmembers(model)  if item[0][0] != "_"]
+# pandas.DataFrameに変換してもみれます
+pd.DataFrame(inspect.getmembers(model),columns=["name","value"]).query("name.str[0] != '_' ")
+
+```
   
-### 2 プロンプトテンプレートについて
+### （削除予定）プロンプトテンプレートについて
   
 pythonの変数でプロンプトテキストを作っています。
   
