@@ -41,6 +41,11 @@
   
 ### 2 生成AIの出力コードの理解
 #### よく使うデータハンドリング
+
+#### まず変数の型
+```python
+type(sample_var)
+```
 #### pandasでdataの内容を調べる
 ```python
 data.head(3) # 先頭3行を表示
@@ -78,7 +83,7 @@ pd.Series(sample_dict)
 ```
 
 #### インスタンス
-```
+```python
 # メソッド全部表示
 dir(model)
 # 先頭が"_"以外のメソッド表示
