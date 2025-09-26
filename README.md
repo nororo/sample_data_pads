@@ -142,13 +142,17 @@ ic(var)
 ## ③生成AIの出力コードを意思決定に活かす
 =>講義スライドへ
 
+
 ## 補足:ライブラリを理解する
 公式ドキュメントを参照してAIで理解する
 - バージョンに注意
 ```python
 import lightgbm as lgb
-lgb.__version__
+print(lgb.__version__)
 ```
+lightGBMの公式ドキュメント
+https://lightgbm.readthedocs.io/en/v4.6.0/
+
 ### pythonの基礎知識
 ##### よくある関数の書き方
 ```python
@@ -156,6 +160,25 @@ lgb.__version__
 def function_name(var1: list[int], var2: int = 0)->int:
   var = var2
   return var
+
+```
+##### よくあるclassの書き方
+```python
+class class_name(class_base)->None:
+  def __init__(self):
+    parameter = 0
+
+  def function(
+        self,
+        input_1:,
+        input_2: bool = False,
+      )
+  @decoration
+  def save(self, filename)->None:
+    self.data.to_csv(filename)
+
+
+
 
 ```
 
