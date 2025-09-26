@@ -255,6 +255,11 @@ dataset_0501.head(5)
 
 
 #### A.1 説明可能AIの例
+ライブラリのインストール
+```sh
+!pip install shap --quiet
+```
+
 ```
 # ランダムフォレストモデルを作成し、学習
 
@@ -385,6 +390,10 @@ y_test_df["pred_y_upper"] = all_models["q 0.80"].predict(X_0501)
 
 
 #### A.3 分布予測
+ライブラリのインストール
+```sh
+!pip install ngboost --quiet
+```
 
 #### 使用するライブラリ
 ```python
