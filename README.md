@@ -32,9 +32,9 @@
 #### 3. テストコードの実行結果を生成AIに入力し、生成・改善のループを行いたい
 - テスト実行結果
 
-※プロンプト（生成AIへの入力）は、テンプレートを用意して、編集は最小限にします。=> AIコーディングツールであれば自動で既存のコードや実行結果を取得でき、2.や3.を自動で実行してくれます。
-※テンプレートは、プロンプトの用途が決まればオプション設定のように使えます。（テンプレートは編集しやすく、変更管理がしやすいようにします。）
-※Google colaboratolyでは、”AI で生成”機能を有効にすると有効にしたGoogleアカウントではノートブックのデータをモデルの学習に追加されてしまうため、秘密情報や個人情報は書かないでください。
+※プロンプト（生成AIへの入力）は、テンプレートを用意して、編集は最小限にします。=> AIコーディングツールであれば自動で既存のコードや実行結果を取得でき、2.や3.を自動で実行してくれます。  
+※テンプレートは、プロンプトの用途が決まればオプション設定のように使えます。（テンプレートは編集しやすく、変更管理がしやすいようにします。）  
+※Google colaboratolyでは、”AI で生成”機能を有効にすると有効にしたGoogleアカウントではノートブックのデータをモデルの学習に追加されてしまうため、秘密情報や個人情報は書かないでください。  
 
 #### テストの簡単な書き方
 
@@ -66,11 +66,11 @@ import pytest
 #### 2. 検証環境を作成して変数の内容を確認
 よく使うデータハンドリングを紹介します。
 
-##### 変数の型を調べる
+##### 2.1 変数の型を調べる
 ```python
 type(sample_var)
 ```
-##### pandasでdataの内容を調べる
+##### 2.2 pandasでdataの内容を調べる
 ```python
 data.head(3) # 先頭3行を表示
 data.tail(3) # 一番下3行を表示
@@ -83,7 +83,7 @@ data["column_name"].hist(nbins=100) # 頻度（連続値）
 data["column_name"].isna().sum() # 欠損値の個数
 ```
 
-##### フィルター(外れ値以外をみたい、特定の条件のデータだけをみたい)
+##### 2.3 フィルター(外れ値以外をみたい、特定の条件のデータだけをみたい)
 ```python
 data_f = data.query("column_name == 1")
 df.query("column_name in ['categ1', 'categ2', ...]")
@@ -95,21 +95,21 @@ colname_variable="column_1"
 data_f = data.query("{1} == 'A'".format(colname_variable))
 ```
 
-##### mergeがうまくいっているかの確認
+##### 2.4 mergeがうまくいっているかの確認
 indexの重複関係
 ```python
 assert set(df1.index) == set(df2.index),"index集合が異なります"
 assert set(df1.index) - set(df2.index)>0,"df2に含まれないindexがdf1にあります"
 ```
 
-#### dictを調べる
+##### 2.5 dictを調べる
 ```python
 list(sample_dict.keys())
 list(sample_dict.values())
 pd.Series(sample_dict)
 ```
 
-#### インスタンスを調べる
+##### 2.6 インスタンスを調べる
 ```python
 # メソッド全部表示
 dir(model)
@@ -121,4 +121,7 @@ dir(model)
 pd.DataFrame(inspect.getmembers(model),columns=["name","value"]).query("name.str[0] != '_' ")
 
 ```
+
+## ③生成AIの出力コードを意思決定に活かす
+=>講義スライドへ
 
