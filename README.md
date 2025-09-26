@@ -49,6 +49,11 @@ import pytest
 
 ```
 
+型が適切か確認する
+```python
+import pydantic 
+```
+
  
 ## ②生成AIの出力コードの理解
 とりあえず動くが信頼できないコードを、使えるようにします。
@@ -95,8 +100,7 @@ colname_variable="column_1"
 data_f = data.query("{1} == 'A'".format(colname_variable))
 ```
 
-##### 2.4 mergeがうまくいっているかの確認
-indexの重複関係
+##### 2.4 mergeがうまくいっているかの確認: indexの重複関係を調べる
 ```python
 assert set(df1.index) == set(df2.index),"index集合が異なります"
 assert set(df1.index) - set(df2.index)>0,"df2に含まれないindexがdf1にあります"
@@ -121,7 +125,49 @@ dir(model)
 pd.DataFrame(inspect.getmembers(model),columns=["name","value"]).query("name.str[0] != '_' ")
 
 ```
+##### 変数の内容を出力
+notebookでは最後の出力を自動で表示してくれるが、変数の内容を途中で表示したい場合
+print
+```
+print(var)
+```
+
+icecreamライブラリを使う場合（変数名:値の形式で出力するためわかりやすい）
+```
+from icecream import ic
+ic(var)
+```
+
 
 ## ③生成AIの出力コードを意思決定に活かす
 =>講義スライドへ
+
+## 補足:ライブラリを理解する
+公式ドキュメントを参照してAIで理解する
+- バージョンに注意
+```python
+import lightgbm as lgb
+lgb.__version__
+```
+### pythonの基礎知識
+##### よくある関数の書き方
+```python
+
+def function_name(var1: list[int], var2: int = 0)->int:
+  var = var2
+  return var
+
+```
+
+##### 継承
+```python
+
+def function_name(var1: list[int], var2: int = 0)->int:
+  var = var2
+  return var
+
+```
+
+
+
 
