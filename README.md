@@ -48,7 +48,7 @@ assert dataset_0501['pred_prob'].isna().sum() == 0,"予測値が欠損である�
 import pydantic 
 ```
 
-```
+```python
 from pandera.typing import DataFrame, Series
 from pydantic import BaseModel, Field
 
@@ -64,7 +64,7 @@ class Resource(BaseModel):
 
 #### 1. 生成AIに説明してもらう
 次のような指示をプロンプトに追加します。
-```
+```python
 入門者がわかるような易しいコメントをつけてください
 各変数がどのようなものなのかコメントしてください
 各処理について、入力と出力とどのような操作をしているか次のフォーマットで記載してください。
