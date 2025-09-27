@@ -115,13 +115,12 @@ pd.DataFrame(inspect.getmembers(model),columns=["name","value"]).query("name.str
 
 ```
 ##### 変数の内容を出力
-notebookでは最後の出力を自動で表示してくれるが、変数の内容を途中で表示したい場合
-print
+notebookでは最後の出力を自動で表示してくれるが、変数の内容を途中で表示したい場合print("表示したい変数名")で表示できる
 ```
 print(var)
 ```
 
-icecreamライブラリを使う場合（変数名:値の形式で出力するためわかりやすい）
+icecreamライブラリを使う場合は（変数名:値の形式で出力するためわかりやすい）
 ```
 from icecream import ic
 ic(var)
