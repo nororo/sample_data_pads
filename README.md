@@ -43,20 +43,6 @@
 assert dataset_0501['pred_prob'].isna().sum() == 0,"予測値が欠損である個数が0ではありません"
 ```
 
-型が適切か確認する
-```python
-import pydantic 
-```
-
-```python
-from pandera.typing import DataFrame, Series
-from pydantic import BaseModel, Field
-
-class Resource(BaseModel):
-    label_lab: StrOrNone
-    lang: StrOrNone
-    role: StrOrNone
-```
  
 ## ②生成AIの出力コードの理解
 とりあえず動くが信頼できないコードを、使えるようにします。
