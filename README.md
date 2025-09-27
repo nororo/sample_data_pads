@@ -154,7 +154,7 @@ data_encoded = pd.get_dummies(data, columns=['product_name', 'product_type', 'we
 data_encoded['price'] = data_encoded['price'].astype(float)
 data_encoded['same_prod_type_stock'] = data_encoded['same_prod_type_stock'].astype(float)
 # 消費期限までの日数の特徴量を追加
-data_encoded['expiry_term']=(pd.to_datetime(data_encoded['expiry_date'])-pd.to_datetime(data_encoded['date'])).dt.days
+data_encoded['expiry_term'] = (pd.to_datetime(data_encoded['expiry_date'])-pd.to_datetime(data_encoded['date'])).dt.days
 
 # 特徴量と目的変数を分離
 X = data_encoded.drop(['sold_today', 'date', 'expiry_date'], axis=1)
@@ -213,7 +213,7 @@ data_encoded_0501 = pd.get_dummies(data_0501, columns=['product_name', 'product_
 data_encoded_0501['price'] = data_encoded_0501['price'].astype(float)
 data_encoded_0501['same_prod_type_stock'] = data_encoded_0501['same_prod_type_stock'].astype(float)
 # 消費期限までの日数の特徴量を追加
-data_encoded_0501['expiry_term']=(pd.to_datetime(data_encoded_0501['expiry_date'])-pd.to_datetime(data_encoded_0501['date'])).dt.days
+data_encoded_0501['expiry_term'] = (pd.to_datetime(data_encoded_0501['expiry_date']) - pd.to_datetime(data_encoded_0501['date'])).dt.days
 
 
 X_0501 = data_encoded_0501.drop(['date', 'expiry_date'], axis=1)
