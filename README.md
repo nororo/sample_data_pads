@@ -156,47 +156,10 @@ print(lgb.__version__)
 lightGBMの公式ドキュメント
 https://lightgbm.readthedocs.io/en/v4.6.0/
 
-### pythonの基礎知識
-##### よくある関数の書き方
-```python
 
-def function_name(var1: list[int], var2: int = 0)->int:
-  var = var2
-  return var
+## 参考A:生成がうまくいかない時用のコード（コピペして使用してください）
 
-```
-##### よくあるclassの書き方
-```python
-class class_name(class_base)->None:
-  def __init__(self):
-    parameter = 0
-
-  def function(
-        self,
-        input_1:,
-        input_2: bool = False,
-      )
-  @decoration
-  def save(self, filename)->None:
-    self.data.to_csv(filename)
-
-
-
-
-```
-
-##### 継承
-```python
-
-def function_name(var1: list[int], var2: int = 0)->int:
-  var = var2
-  return var
-
-```
-
-## 補足:生成がうまくいかない時用
-
-#### 1. 前処理
+#### A.1. 前処理
 ```python
 # カテゴリカル変数をone-hotエンコーディング
 data_encoded = pd.get_dummies(data, columns=['product_name', 'product_type', 'weekday', 'weather'],dtype=int)
@@ -215,7 +178,7 @@ y = data_encoded['sold_today']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
 
-#### 2. モデルの訓練
+#### A.2. モデルの訓練
 ```
 # LightGBMモデルを作成し、学習
 
@@ -231,7 +194,7 @@ print(f"テストデータの精度: {test_accuracy:.4f}")
 ```
 
 
-#### 3.予測対象データの読み込み
+#### A.3.予測対象データの読み込み
 
 ```python
 # 予測対象データセット
@@ -255,7 +218,7 @@ data_0501 = dataset_0501.set_index('prod_id_unique')
 ```
 
 
-#### 4.予測対象データの前処理
+#### A.4.予測対象データの前処理
 
 ```
 data_encoded_0501 = pd.get_dummies(data_0501, columns=['product_name', 'product_type', 'weekday', 'weather'], dtype=int)
@@ -272,21 +235,24 @@ X_0501 = pd.DataFrame(X_0501,columns=X_train.columns).fillna(0)
 
 ```
 
-#### 5.予測
+#### A.5.予測
 
 ```
 dataset_0501['pred_prob']=model.predict_proba(X_0501)[:,1]
 dataset_0501.head(5)
 ```
 
+## 参考B: 説明可能AIの参考コード（コピペして使用してください）
 
-#### A.1 説明可能AIの例
+#### B.1 ライブラリのインストール
 ライブラリのインストール
 ```sh
 !pip install shap --quiet
 ```
+#### データの読み取りとA.1 データの前処理までを実行してください
 
-```
+#### B.2 モデルの学習
+```python
 # ランダムフォレストモデルを作成し、学習
 
 model = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -304,19 +270,19 @@ explainer = shap.Explainer(model)
 shap_values = explainer(X_test)
 ```
 
-```
+```python
 # サンプルを1つ選択してウォーターフォール図を作成
 sample_index = 0 # 例として、テストデータの最初のサンプルを使用
 shap.plots.waterfall(shap_values[sample_index][:,1])
 ```
 
-#### A.2 区間予測
+#### B.3 区間予測
 ```python
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
 ```
 
-#### 訓練データの前処理
+#### B.4 訓練データの前処理
 ```python
 # 訓練データセットのロード
 
@@ -350,7 +316,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 ```
 
-#### 区間予測モデルの訓練
+#### B.5 区間予測モデルの訓練
 ```python
 # 機械学習モデルの訓練
 
@@ -375,7 +341,7 @@ for alpha in [0.05, 0.20, 0.50, 0.80, 0.95]:
 ```
 
 
-#### バリデーションデータについて区間予測
+#### B.6 バリデーションデータについて区間予測
 ```python
 # テストデータにおける予測の確認
 y_test_df = dataset_sale.query("index in @y_test.index").copy()
@@ -384,7 +350,7 @@ y_test_df["pred_y_lower"] = all_models["q 0.20"].predict(X_test)
 y_test_df["pred_y_upper"] = all_models["q 0.80"].predict(X_test)
 ```
 
-#### 予測対象データのロード
+#### B.7 予測対象データのロード
 ```python
 # 予測対象データのロード
 
@@ -403,7 +369,7 @@ X_0501 = pd.DataFrame(X_0501,columns=X_train.columns).fillna(0)
 y_0501 = dataset_sale_encoded_0501['sale_count']
 
 ```
-#### 区間を予測
+#### B.8 区間を予測
 ```python
 # 予測対象データについて区間予測
 
@@ -414,14 +380,14 @@ y_test_df["pred_y_upper"] = all_models["q 0.80"].predict(X_0501)
 
 ```
 
+## 参考C: 分布予測の参考コード（コピペして使用してください）
 
-#### A.3 分布予測
-ライブラリのインストール
+#### C.1 ライブラリのインストール
 ```sh
 !pip install ngboost --quiet
 ```
 
-#### 使用するライブラリ
+#### C.2 使用するライブラリ
 ```python
 from ngboost import NGBRegressor
 from ngboost.distns import Normal
@@ -431,7 +397,7 @@ from matplotlib import pyplot as plt
 
 ```
 
-#### 訓練データの読み込み
+#### C.3 訓練データの読み込み
 ```python
 # 訓練データセットのロード（区間予測と同じ）
 
@@ -466,7 +432,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 ```
 
-#### 訓練データの前処理
+#### C.4 訓練データの前処理
 ```python
 
 # データを訓練セットとテストセットに分割
@@ -489,7 +455,7 @@ print(f"Mean Squared Error: {mse:.4f}")
 ```
 
 
-#### バリデーションデータの予測分布の可視化
+#### C.5 バリデーションデータの予測分布の可視化
 ```python
 # 予測分布の可視化（例として2番目のテストデータの予測分布）
 plt.figure(figsize=(8, 6))
@@ -504,7 +470,7 @@ plt.show()
 ```
 
 
-#### 予測データの前処理（同様）
+#### C.6 予測データの前処理（同様）
 ```python
 # 予測対象データのロード（区間予測と同じ）
 
@@ -523,14 +489,14 @@ X_0501 = pd.DataFrame(X_0501,columns=X_train.columns).fillna(0)
 y_0501 = dataset_sale_encoded_0501['sale_count']
 ```
 
-#### 分布を予測
+#### C.7 分布を予測
 ```python
 # 予測対象データについての分布予測
 y_pred_dist_0501 = ngb.pred_dist(X_0501)
 y_pred_dist_0501.sample(1)[0]
 ```
 
-#### モンテカルロシミュレーション
+#### C.8 モンテカルロシミュレーション
 ```python
 initial_stock=30
 initial_stock_hist=[]
